@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narayan Rakhecha | Quant Developer</title>
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="custom-cursor" id="cursor">
+        <div class="cursor-inner">
+            <div class="crosshair-h"></div>
+            <div class="crosshair-v"></div>
+        </div>
+    </div>
+    <div class="custom-cursor-trail" id="cursor-trail"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="brand" onclick="scrollToSection('home')">
+                <div class="status-dot"></div>
+                <div class="brand-text">
+                    <i data-lucide="terminal" class="icon-blue"></i>
+                    <span class="desktop-only">NARAYAN_TERMINAL_V3</span>
+                    <span class="mobile-only">NR_V3</span>
+                </div>
+            </div>
+
+            <nav class="desktop-nav">
+                <button onclick="scrollToSection('home')">HOME</button>
+                <button onclick="scrollToSection('strategies')">PROJECTS</button>
+                <button onclick="scrollToSection('experience')">EXPERIENCE</button>
+                <button onclick="scrollToSection('education')">EDUCATION</button>
+                <button onclick="scrollToSection('contact')">CONTACT</button>
+            </nav>
+
+            <div class="header-meta desktop-only">
+                <div class="clock-container">
+                    <i data-lucide="clock" class="icon-sm"></i>
+                    <span id="clock">00:00:00</span> AEST
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span id="menu-text">MENU</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <nav>
+            <button onclick="scrollToSection('home')">HOME</button>
+            <button onclick="scrollToSection('strategies')">PROJECTS</button>
+            <button onclick="scrollToSection('experience')">EXPERIENCE</button>
+            <button onclick="scrollToSection('education')">EDUCATION</button>
+            <button onclick="scrollToSection('contact')">CONTACT</button>
+        </nav>
+        <div class="mobile-status">SYSTEM STATUS: ONLINE</div>
+    </div>
+
+    <main id="home">
+        <!-- Hero Section -->
+        <section class="hero-grid">
+            <div class="hero-content">
+                <div class="status-badge">
+                    <span class="status-dot-green"></span>
+                    <span>OPEN FOR OPPORTUNITIES</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    ALPHA <br>
+                    <span class="text-gradient">GENERATOR</span>
+                </h1>
+                
+                <p class="hero-bio">
+                    <span class="prompt">&gt;</span> 
+                Recent University of Wollongong graduate with a degree in Computer Science (majoring in AIand Finance), currently advancing expertise in algorithmic trading through the QuantInsti EPAT program. Specializes in Multi-Agent AI Systems, real-time data streaming, and financial modeling, with a focus on applying Large Language Model (LLM) orchestration to quantitative finance </p>
+
+                <div class="hero-actions">
+                    <button class="btn-primary" onclick="scrollToSection('strategies')">
+                        VIEW STRATEGIES <i data-lucide="arrow-up-right"></i>
+                    </button>
+                    <button class="btn-secondary" onclick="scrollToSection('contact')">
+                        INITIATE_HANDSHAKE
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-chart">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <div class="live-indicator">
+                            <span class="status-dot-green"></span> LIVE FEED
+                        </div>
+                        <div class="chart-meta">
+                            <span>SYM: ALPHA</span>
+                            <span id="live-price" class="text-green">0.00</span>
+                        </div>
+                    </div>
+                    <canvas id="marketChart"></canvas>
+                </div>
+                <div class="chart-stats">
+                    <div class="stat-badge">
+                        <span class="stat-label">TOTAL ALGORITHMS</span>
+                        <span class="stat-value">12</span>
+                    </div>
+                    <div class="stat-badge">
+                        <span class="stat-label">AVG LATENCY</span>
+                        <span class="stat-value text-green">&lt; 5ms</span>
+                    </div>
+                    <div class="stat-badge">
+                        <span class="stat-label">SHARPE RATIO</span>
+                        <span class="stat-value text-green">2.4</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ticker -->
+        <div class="ticker-wrap">
+            <div class="ticker" id="ticker-content">
+                <!-- Content injected by JS -->
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <!-- EDIT NOTE: Projects are defined in `script.js` -> PROJECTS array.
+             To add or update a project, edit that array. Each object follows the existing shape.
+             Rendered cards will appear inside #projects-container. -->
+        <section id="strategies" class="section">
+            <div class="section-header">
+                <div>
+                    <h2><span class="text-blue">//</span> STRATEGY DEPLOYMENT</h2>
+                    <p>PROJECT PORTFOLIO</p>
+                </div>
+
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <button class="filter-btn active" onclick="filterProjects('TOP')" id="btn-top">
+                            <i data-lucide="target" class="icon-xs"></i> TOP RATED
+                        </button>
+                        <button class="filter-btn" onclick="filterProjects('ALL')" id="btn-all">
+                            <i data-lucide="list" class="icon-xs"></i> ARCHIVE (ALL)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="projects-container" class="projects-grid">
+                <!-- Projects injected by JS. To change projects, edit the `PROJECTS` array in `script.js`. -->
+            </div>
+            
+            <!-- Marquee container for ALL view (hidden by default) -->
+            <div id="projects-marquee" class="projects-marquee hidden">
+                <div class="marquee-track" id="marquee-track">
+                    <!-- Projects injected by JS -->
+                </div>
+
+                <!-- NAV: left & right arrows -->
+                <div class="marquee-nav left" aria-hidden="false">
+                    <button id="marquee-prev" aria-label="Previous project"><i data-lucide="chevron-left" class="icon-sm"></i></button>
+                </div>
+                <div class="marquee-nav right" aria-hidden="false">
+                    <button id="marquee-next" aria-label="Next project"><i data-lucide="chevron-right" class="icon-sm"></i></button>
+                </div>
+
+                <div class="marquee-status">
+                    <i data-lucide="activity" class="text-green icon-xs"></i> LIVE FEED ACTIVE // HOVER TO INSPECT
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section border-top">
+            <div class="section-header">
+                <h2><span class="text-blue">//</span> EXECUTION LOG</h2>
+                <p>PROFESSIONAL HISTORY</p>
+            </div>
+
+            <div class="experience-list">
+                <div class="experience-card">
+                    <div class="exp-header">
+                        <div>
+                            <h3>AI Research Intern</h3>
+                            <span class="exp-company">@ University of Wollongong</span>
+                        </div>
+                        <div class="exp-date">JAN 2025 - OCT 2025</div>
+                    </div>
+                    <p class="exp-desc">Led a 5-member team on a year-long research project to build a Multi-Agent AI System. Architected workflow orchestration and real-time data streaming to optimize task delegation and integration of various LLMs (Gemini, OpenAI).</p>
+                    <div class="exp-tags">
+                        <span>Multi-Agent AI</span>
+                        <span>LLM Orchestration</span>
+                    </div>
+                </div>
+
+                <div class="experience-card">
+                    <div class="exp-header">
+                        <div>
+                            <h3>Cybersecurity Intern</h3>
+                            <span class="exp-company">@ Work Ventures, Sydney</span>
+                        </div>
+                        <div class="exp-date">OCT 2023 - DEC 2023</div>
+                    </div>
+                    <p class="exp-desc">Researched and evaluated emerging cybersecurity technologies, identifying 15 potential innovations to reduce incident response time by 30%. Collaborated with SMEs to spread cybersecurity awareness and simple mitigation steps.</p>
+                    <div class="exp-tags">
+                        <span>-80% Cyber Risk</span>
+                        <span>-30% Response Time</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="section border-top">
+            <div class="section-header">
+                <h2><span class="text-blue">//</span> ACADEMIC CREDENTIALS</h2>
+                <p>EDUCATION & CERTIFICATIONS</p>
+            </div>
+
+                <!-- EDIT NOTE: EPAT CERTIFICATES
+                     - Certificates are populated from `script.js` -> EPAT_CERTIFICATES
+                     - Edit that array to change what appears here.
+                     - The in-card dropdown (preferred) uses #epat-panel; the modal below is optional. -->
+                <div class="edu-card epat">
+    <div class="edu-bg-icon"><i data-lucide="award"></i></div>
+    <div class="edu-meta">
+        <i data-lucide="star" class="text-blue icon-sm"></i>
+        <span>GRAD:MARCH 2026</span>
+        <button id="epat-toggle" type="button" class="epat-toggle pulsing" aria-expanded="false" aria-controls="epat-panel" aria-label="Show certificates" title="Show certificates">
+            <i data-lucide="chevron-down" class="icon-xs"></i>
+        </button>
+    </div>
+    <h3>QuantInsti — EPAT</h3>
+    <div class="edu-degree">Executive Programme in Algorithmic Trading</div>
+    <p class="edu-details">A 6-month intensive curriculum to fast-track one's quant journey.</p>
+
+    <div id="epat-panel" class="epat-panel" aria-hidden="true">
+        <ul class="cert-list">
+            <!-- Certificate items injected by `script.js` from `EPAT_CERTIFICATES` -->
+        </ul>
+    </div>
+</div>
+
+            <div class="education-grid">
+                <div class="edu-card">
+                    <div class="edu-bg-icon"><i data-lucide="graduation-cap"></i></div>
+                    <div class="edu-meta">
+                        <i data-lucide="book-open" class="text-blue icon-sm"></i>
+                        <span>GRAD: DEC 2025</span>
+                    </div>
+                    <h3>University of Wollongong</h3>
+                    <div class="edu-degree">B. Comp Sci & Finance</div>
+                    <p class="edu-details">Majors in Big Data, AI & Finance. Focus on intersection of algorithmic systems and financial markets.</p>
+                </div>
+
+                <div class="edu-card">
+                    <div class="edu-bg-icon"><i data-lucide="graduation-cap"></i></div>
+                    <div class="edu-meta">
+                        <i data-lucide="book-open" class="text-blue icon-sm"></i>
+                        <span>GRAD: DEC 2023</span>
+                    </div>
+                    <h3>University of Wollongong</h3>
+                    <div class="edu-degree">Diploma of Information Technology</div>
+                    <p class="edu-details">Comprehensive foundation in IT infrastructure and software development principles.</p>
+                </div>
+
+                
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="contact-card">
+                <div class="card-line-top"></div>
+                <div class="contact-status">
+                    <span class="status-dot-green"></span> SECURE_CONNECTION_ESTABLISHED
+                </div>
+                
+                <h2 class="contact-title">
+                    <span class="text-blue">&gt;</span> READY TO DEPLOY? <span class="cursor-blink">_</span>
+                </h2>
+                
+                <p class="contact-text">
+                    I am currently identifying new arbitrage opportunities in the job market. 
+                    If you are building high-performance systems or alpha-generating strategies, let's compare notes.
+                </p>
+
+                <div class="contact-actions">
+                    <a href="mailto:narayanrakhechaau@gmail.com" class="btn-primary">
+                        <i data-lucide="mail"></i> SEND_PACKET
+                    </a>
+                    <a href="https://www.linkedin.com/in/narayan-rakhecha-1a065a278/" target="_blank" class="btn-outline">
+                        <i data-lucide="linkedin"></i> CONNECT_LINKEDIN
+                    </a>
+                </div>
+
+                <div class="social-grid">
+                    <a href="https://www.instagram.com/quant.narayan/" target="_blank" class="social-item group">
+                        <div class="social-icon group-hover-pink"><i data-lucide="instagram"></i></div>
+                        <span>INSTAGRAM</span>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" class="social-item group">
+                        <div class="social-icon group-hover-blue"><i data-lucide="twitter"></i></div>
+                        <span>TWITTER</span>
+                    </a>
+                    <a href="https://www.youtube.com/@narayanrakhecha2376" target="_blank" class="social-item group">
+                        <div class="social-icon group-hover-red"><i data-lucide="youtube"></i></div>
+                        <span>YOUTUBE</span>
+                    </a>
+                    <a href="https://github.com/GodSpeedn" target="_blank" class="social-item group">
+                        <div class="social-icon group-hover-white"><i data-lucide="github"></i></div>
+                        <span>GITHUB</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 NARAYAN RAKHECHA. ALL SYSTEMS OPERATIONAL. <br> LATENCY: 12ms | RENDER: HTML5</p>
+    </footer>
+
+
+    <!-- EPAT Certificates Modal -->
+    <!-- NOTE: This modal is not used by the in-card dropdown implementation. Remove this block if you prefer a cleaner HTML file. -->
+    <div id="epat-modal" class="modal hidden" aria-hidden="true" role="dialog" aria-labelledby="epat-modal-title">
+        <div class="modal-overlay" id="epat-modal-overlay"></div>
+        <div class="modal-panel" role="document">
+            <header class="modal-header">
+                <h3 id="epat-modal-title">EPAT Certificates</h3>
+                <button id="epat-modal-close" class="modal-close" aria-label="Close">
+                    <i data-lucide="x"></i>
+                </button>
+            </header>
+            <div class="modal-body" id="epat-modal-body">
+                <ul class="cert-list" id="epat-cert-list">
+                    <!-- Certificates inserted dynamically -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
