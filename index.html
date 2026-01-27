@@ -1,7 +1,7 @@
-<!DOCTYPE html>         
-<html lang="en">               
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">       
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Narayan Rakhecha | Quant Developer</title>
     
@@ -18,7 +18,7 @@
     <div class="custom-cursor" id="cursor">
         <div class="cursor-inner">
             <div class="crosshair-h"></div>
-            <div class="crosshair-v"></div>    
+            <div class="crosshair-v"></div>
         </div>
     </div>
     <div class="custom-cursor-trail" id="cursor-trail"></div>
@@ -350,11 +350,50 @@
         </div>
     </div>
 
+    <!-- Project Detail Modal -->
+    <div id="project-detail-modal" class="modal hidden" aria-hidden="true" role="dialog" aria-labelledby="project-modal-title">
+        <div class="modal-overlay" id="project-modal-overlay"></div>
+        <div class="modal-panel project-modal-panel" role="document">
+            <header class="modal-header">
+                <div>
+                    <h3 id="project-modal-title" class="project-modal-title"></h3>
+                    <span id="project-modal-type" class="proj-type"></span>
+                </div>
+                <button id="project-modal-close" class="modal-close" aria-label="Close">
+                    <i data-lucide="x"></i>
+                </button>
+            </header>
+            <div class="modal-body">
+                <p id="project-modal-desc" class="proj-desc"></p>
+                
+                <div class="modal-section">
+                    <h4 class="modal-section-title">METRICS</h4>
+                    <div id="project-modal-stats" class="proj-stats"></div>
+                </div>
+                
+                <div class="modal-section">
+                    <h4 class="modal-section-title">TECH STACK</h4>
+                    <div id="project-modal-tech" class="tech-stack" style="flex-wrap: wrap; gap: 0.5rem;"></div>
+                </div>
+                
+                <div class="modal-section">
+                    <h4 class="modal-section-title">LINKS</h4>
+                    <div class="project-modal-links">
+                        <a id="project-link-code" href="#" class="btn-outline" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
+                            <i data-lucide="github" class="icon-sm"></i> VIEW CODE
+                        </a>
+                        <a id="project-link-live" href="#" class="btn-outline" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
+                            <i data-lucide="external-link" class="icon-sm"></i> LIVE PROJECT
+                        </a>
+                        <a id="project-link-youtube" href="#" class="btn-outline" target="_blank" style="text-decoration: none; display: flex; align-items: center; gap: 0.5rem; justify-content: center;">
+                            <i data-lucide="youtube" class="icon-sm"></i> YOUTUBE EXPLANATION
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-

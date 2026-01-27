@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Real-time order book reconstruction and visualization engine. Detects iceberg orders and liquidity imbalances using statistical arbitrage signals.",
             tech: ["C++", "Python", "WebSocket"],
             stats: { "Latency": "< 10ms", "Throughput": "50k msg/s", "Status": "LIVE" },
-            links: { code: "#", live: "#" },
+            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
             top: true
         },
         {
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "3D visualization of implied volatility surfaces using Black-Scholes and Heston models. Calibrates surfaces in real-time against live option chain data.",
             tech: ["Python", "Plotly", "NumPy"],
             stats: { "Model": "Heston", "Calibration": "0.4s", "Status": "BETA" },
-            links: { code: "#", live: "#" },
+            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
             top: true
         },
         {
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Reinforcement learning agent (PPO) trained on tick data to execute optimal order routing. Backtested against 5 years of historical futures data.",
             tech: ["PyTorch", "Gym", "Pandas"],
             stats: { "Sharpe": "2.1", "Drawdown": "-12%", "Status": "TESTNET" },
-            links: { code: "#", live: "#" },
+            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
             top: true
         },
         {
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Smart contract interface aggregating liquidity across Uniswap, Sushiswap, and Curve to find optimal token swap routes with minimal slippage.",
             tech: ["Solidity", "Ethers.js", "GraphQ"],
             stats: { "Gas Saved": "15%", "TVL": "$40k", "Status": "DEPLOYED" },
-            links: { code: "#", live: "#" },
+            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
             top: false
         },
         {
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Pipelines scraping Twitter and Reddit financial discussions to generate sentiment scores for meme-stocks and correlating them with volume spikes.",
             tech: ["Python", "NLTK", "Kafka"],
             stats: { "Accuracy": "82%", "Sources": "4", "Status": "OFFLINE" },
-            links: { code: "#", live: "#" },
+            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
             top: false
         },
         {
@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Mean-variance optimization engine using Monte Carlo simulations to construct efficient frontiers for diversified asset baskets.",
             tech: ["R", "Shiny", "C++"],
             stats: { "Assets": "500+", "Speed": "2ms", "Status": "ARCHIVE" },
-            links: { code: "#", live: "#" },
+            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
             top: false
         }
     ];
@@ -253,15 +253,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // createProjectCard: renders a single project object into HTML
-    // To change displayed projects, edit the `PROJECTS` array near the top of this file.
-    // createProjectCard: renders a single project object into HTML
-    // To add or update projects, edit the `PROJECTS` array at the top of this file.
+    // To change displayed projects, edit the `PROJECTS` array at the top of this file.
     function createProjectCard(proj, isCompact = false) {
         const techStack = proj.tech.slice(0, isCompact ? 2 : 3).map(t => `<span class="tech-tag">#${t}</span>`).join('');
         const randomPnL = (Math.random() * 100).toFixed(2);
         
         return `
-            <div class="project-card ${isCompact ? 'compact-card' : ''}">
+            <div class="project-card ${isCompact ? 'compact-card' : ''}" onclick="window.openProjectModal(event, ${PROJECTS.indexOf(proj)})">
                 <div class="card-indicator">● RUNNING</div>
                 <div class="pnl-overlay">
                     <span class="stat-label">SIMULATED PnL</span>
@@ -276,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${!isCompact ? `<div class="proj-stats">${Object.entries(proj.stats).map(([k, v]) => `<div class="stat-group"><span class="stat-label">${k.toUpperCase()}</span><span class="stat-val">${v}</span></div>`).join('')}</div>` : ''}
                 <div class="proj-footer">
                     <div class="tech-stack">${techStack}</div>
-                    <div class="proj-links"><a href="${proj.links.code}" class="proj-link"><i data-lucide="github" class="icon-sm"></i></a></div>
+                    <div class="proj-links"><a href="${proj.links.code}" class="proj-link" onclick="event.stopPropagation();"><i data-lucide="github" class="icon-sm"></i></a></div>
                 </div>
             </div>`;
     }
@@ -303,6 +301,117 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // G. Project Detail Modal
+    let currentMarqueeScroll = 0;
+    
+    window.openProjectModal = function(event, projIndex) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        const proj = PROJECTS[projIndex];
+        const modal = document.getElementById('project-detail-modal');
+        
+        if (!modal) return;
+        
+        // Populate modal with project details
+        const titleEl = document.getElementById('project-modal-title');
+        const typeEl = document.getElementById('project-modal-type');
+        const descEl = document.getElementById('project-modal-desc');
+        const statsEl = document.getElementById('project-modal-stats');
+        const techEl = document.getElementById('project-modal-tech');
+        const codeLink = document.getElementById('project-link-code');
+        const liveLink = document.getElementById('project-link-live');
+        const youtubeLink = document.getElementById('project-link-youtube');
+        
+        titleEl.innerText = proj.title;
+        typeEl.innerText = proj.type;
+        descEl.innerText = proj.description;
+        
+        // Populate stats
+        statsEl.innerHTML = Object.entries(proj.stats).map(([k, v]) => 
+            `<div class="stat-group"><span class="stat-label">${k.toUpperCase()}</span><span class="stat-val">${v}</span></div>`
+        ).join('');
+        
+        // Populate tech stack
+        techEl.innerHTML = proj.tech.map(t => `<span class="tech-tag">#${t}</span>`).join('');
+        
+        // Set links
+        codeLink.href = proj.links.code;
+        codeLink.style.display = proj.links.code !== '#' ? 'flex' : 'none';
+        
+        liveLink.href = proj.links.live;
+        liveLink.style.display = proj.links.live !== '#' ? 'flex' : 'none';
+        
+        youtubeLink.href = proj.links.youtube || '#';
+        youtubeLink.style.display = proj.links.youtube && proj.links.youtube !== '#' ? 'flex' : 'none';
+        
+        // Show modal
+        modal.classList.remove('hidden');
+        modal.classList.add('open');
+        
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+    
+    window.closeProjectModal = function() {
+        const modal = document.getElementById('project-detail-modal');
+        if (modal) {
+            modal.classList.remove('open');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 280);
+        }
+    }
+    
+    // Modal close button and overlay
+    const projectModal = document.getElementById('project-detail-modal');
+    const projectModalClose = document.getElementById('project-modal-close');
+    const projectModalOverlay = document.getElementById('project-modal-overlay');
+    
+    if (projectModalClose) {
+        projectModalClose.addEventListener('click', window.closeProjectModal);
+    }
+    
+    if (projectModalOverlay) {
+        projectModalOverlay.addEventListener('click', window.closeProjectModal);
+    }
+    
+    // H. Marquee Navigation (Archive view)
+    const marqueeTrackNav = document.getElementById('marquee-track');
+    const marqueeNext = document.getElementById('marquee-next');
+    const marqueePrev = document.getElementById('marquee-prev');
+    let marqueeAutoPlayTimeout;
+    
+    const resumeMarqueeAutoplay = () => {
+        if (marqueeTrackNav) {
+            marqueeTrackNav.style.animation = 'marquee-cards 40s linear infinite';
+            currentMarqueeScroll = 0;
+            marqueeTrackNav.style.transform = 'translateX(0)';
+        }
+    };
+    
+    if (marqueeNext && marqueeTrackNav) {
+        marqueeNext.addEventListener('click', () => {
+            currentMarqueeScroll += 340; // Card width + gap
+            marqueeTrackNav.style.transform = `translateX(-${currentMarqueeScroll}px)`;
+            marqueeTrackNav.style.animation = 'none';
+            
+            // Clear existing timeout and set new one
+            clearTimeout(marqueeAutoPlayTimeout);
+            marqueeAutoPlayTimeout = setTimeout(resumeMarqueeAutoplay, 3000); // Resume after 3 seconds
+        });
+    }
+    
+    if (marqueePrev && marqueeTrackNav) {
+        marqueePrev.addEventListener('click', () => {
+            currentMarqueeScroll = Math.max(0, currentMarqueeScroll - 340);
+            marqueeTrackNav.style.transform = `translateX(-${currentMarqueeScroll}px)`;
+            marqueeTrackNav.style.animation = 'none';
+            
+            // Clear existing timeout and set new one
+            clearTimeout(marqueeAutoPlayTimeout);
+            marqueeAutoPlayTimeout = setTimeout(resumeMarqueeAutoplay, 3000); // Resume after 3 seconds
+        });
+    }
 
     /* --- 4. EPAT DROPDOWN (THE FIX) ---
        This in-card dropdown renders the EPAT certificates listed in `EPAT_CERTIFICATES`.

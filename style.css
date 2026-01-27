@@ -129,7 +129,7 @@ main { padding-top: 6rem; max-width: 1280px; margin: 0 auto; padding-left: 1rem;
 
 /* Projects Grid */
 .projects-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-.project-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; transition: border-color 0.2s; position: relative; overflow: hidden; }
+.project-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; transition: border-color 0.2s; position: relative; overflow: hidden; cursor: pointer; }
 .project-card:hover { border-color: var(--primary); }
 .card-indicator { position: absolute; top: 0; right: 0; padding: 0.5rem; font-family: var(--font-mono); font-size: 0.625rem; color: var(--accent-green); background: rgba(34, 197, 94, 0.1); border-bottom-left-radius: 8px; opacity: 0; transition: opacity 0.2s; }
 .project-card:hover .card-indicator { opacity: 1; }
@@ -157,11 +157,18 @@ main { padding-top: 6rem; max-width: 1280px; margin: 0 auto; padding-left: 1rem;
 .proj-link:hover { color: white; }
 
 /* Marquee Project View */
-.projects-marquee { width: 100%; overflow: hidden; }
+.projects-marquee { width: 100%; overflow: hidden; position: relative; }
 .marquee-track { display: flex; gap: 1.5rem; width: max-content; animation: marquee-cards 40s linear infinite; }
 .marquee-track:hover { animation-play-state: paused; }
 .marquee-status { margin-top: 1rem; text-align: center; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); display: flex; justify-content: center; align-items: center; gap: 0.5rem; }
 .compact-card { min-width: 320px; width: 320px; margin-right: 1.5rem; }
+
+/* Marquee Navigation */
+.marquee-nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; }
+.marquee-nav.left { left: 1rem; }
+.marquee-nav.right { right: 1rem; }
+.marquee-nav button { background: var(--primary); border: 2px solid var(--primary); color: white; padding: 0.75rem 1rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); font-weight: 700; }
+.marquee-nav button:hover { background: #2563eb; border-color: #2563eb; box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5); transform: scale(1.1); }
 
 /* Experience */
 .experience-list { display: flex; flex-direction: column; gap: 1.5rem; }
@@ -303,4 +310,16 @@ main { padding-top: 6rem; max-width: 1280px; margin: 0 auto; padding-left: 1rem;
     .hero-title { font-size: 2.5rem; }
     .social-grid { grid-template-columns: repeat(2, 1fr); }
     .proj-stats { grid-template-columns: 1fr; }
+}
+
+/* Project Modal Styles */
+.project-modal-panel { max-width: 700px; }
+.project-modal-title { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.modal-section { margin-top: 1.5rem; }
+.modal-section-title { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 0.05em; }
+.project-modal-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; }
+.project-modal-links a { padding: 0.5rem 1rem; }
+
+@media (max-width: 640px) {
+    .project-modal-links { grid-template-columns: 1fr; }
 }
