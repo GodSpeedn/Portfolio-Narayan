@@ -1,6 +1,9 @@
 // script.js - CLEAN VERSION
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Show production popup on page load
+    showProductionPopup();
+
     /* ====================================================
        EDIT GUIDE
        - PROJECTS: edit the `PROJECTS` array in the CONFIG section below
@@ -33,25 +36,25 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Real-time order book reconstruction and visualization engine. Detects iceberg orders and liquidity imbalances using statistical arbitrage signals.",
             tech: ["C++", "Python", "WebSocket"],
             stats: { "Latency": "< 10ms", "Throughput": "50k msg/s", "Status": "LIVE" },
-            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
+                links: { code: "https://github.com", live: "https://example.com", youtube: "https://www.youtube.com/@narayanrakhecha2376" },
             top: true
         },
         {
             title: "Options Volatility Surface",
             type: "DERIVATIVES",
-            description: "3D visualization of implied volatility surfaces using Black-Scholes and Heston models. Calibrates surfaces in real-time against live option chain data.",
-            tech: ["Python", "Plotly", "NumPy"],
-            stats: { "Model": "Heston", "Calibration": "0.4s", "Status": "BETA" },
-            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
+            description: "Volatility Smile modeling engine for SPY options. Uses Black-Scholes and Brent's method to calculate implied volatility, fits Cubic Spline curves to detect mispricings, and executes mean-reversion trades via Straddle/Butterfly spreads. Includes synthetic backtest engine simulating 5+ years of market data with automated kink detection.",
+            tech: ["Python", "NumPy", "Pandas", "SciPy", "Matplotlib", "yfinance"],
+            stats: { "Backtest Period": "5Y+", "Curve Fit": "Cubic Spline", "Status": "BETA" },
+                links: { code: "https://github.com/GodSpeedn/Trading-options-using-volatility-smile-", live: "https://colab.research.google.com/drive/1uTI3Wsf5MtzCgs1FKkPKpRBwNfRFPICW?authuser=2", youtube: "https://www.youtube.com/@narayanrakhecha2376" },
             top: true
         },
         {
-            title: "Neural Algorithmic Trader",
-            type: "ML / AI",
-            description: "Reinforcement learning agent (PPO) trained on tick data to execute optimal order routing. Backtested against 5 years of historical futures data.",
-            tech: ["PyTorch", "Gym", "Pandas"],
-            stats: { "Sharpe": "2.1", "Drawdown": "-12%", "Status": "TESTNET" },
-            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
+            title: "Trading Markets using Futures OI",
+            type: "QUANT STRATEGY",
+            description: "Backtests a strategy that trades spot assets based on price trends confirmed by Futures Open Interest (OI) momentum. Combines SMA crossovers on spot price with OI filters to generate signals. Entry/exit rules use price, OI, and expiry logic. Reveals the importance of regime filtering and risk management in quant trading.",
+            tech: ["Python", "Pandas", "Matplotlib"],
+            stats: { "Total Trades": "231", "Win Ratio": "~0.35", "Status": "BACKTESTED" },
+                links: { code: "https://github.com/GodSpeedn/Trading-in-spot-market-using-futures-data-", live: "https://colab.research.google.com/drive/183f2AR2L9sDpznVUHFpxQ-8seFJIDdvf?authuser=2", youtube: "https://www.youtube.com/@narayanrakhecha2376" },
             top: true
         },
         {
@@ -60,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Smart contract interface aggregating liquidity across Uniswap, Sushiswap, and Curve to find optimal token swap routes with minimal slippage.",
             tech: ["Solidity", "Ethers.js", "GraphQ"],
             stats: { "Gas Saved": "15%", "TVL": "$40k", "Status": "DEPLOYED" },
-            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
+                links: { code: "https://github.com", live: "https://example.com", youtube: "https://www.youtube.com/@narayanrakhecha2376" },
             top: false
         },
         {
@@ -69,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Pipelines scraping Twitter and Reddit financial discussions to generate sentiment scores for meme-stocks and correlating them with volume spikes.",
             tech: ["Python", "NLTK", "Kafka"],
             stats: { "Accuracy": "82%", "Sources": "4", "Status": "OFFLINE" },
-            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
+                links: { code: "https://github.com", live: "https://example.com", youtube: "https://www.youtube.com/@narayanrakhecha2376" },
             top: false
         },
         {
@@ -78,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Mean-variance optimization engine using Monte Carlo simulations to construct efficient frontiers for diversified asset baskets.",
             tech: ["R", "Shiny", "C++"],
             stats: { "Assets": "500+", "Speed": "2ms", "Status": "ARCHIVE" },
-            links: { code: "https://github.com", live: "https://example.com", youtube: "https://youtube.com" },
+                links: { code: "https://github.com", live: "https://example.com", youtube: "https://www.youtube.com/@narayanrakhecha2376" },
             top: false
         }
     ];
@@ -458,3 +461,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+// Production Popup Functions
+function showProductionPopup() {
+    const popup = document.getElementById('production-popup');
+    if (popup) {
+        popup.classList.remove('hidden');
+    }
+}
+
+function closeProductionPopup() {
+    const popup = document.getElementById('production-popup');
+    if (popup) {
+        popup.classList.add('hidden');
+    }
+}
